@@ -1,0 +1,27 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        HashMap<Integer,Integer> h=new HashMap<>();
+        for(int it:nums){
+            h.put(it,h.getOrDefault(it,0)+1);
+        }
+        int n=nums.length;
+        int c=0;
+        for(int it:h.keySet()){
+            if(h.get(it)>n/2){
+                c=it;
+            }
+        }
+        return c;
+    }
+}
+
+
+
+Example 1:
+
+Input: nums = [3,2,3]
+Output: 3
+Example 2:
+
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
