@@ -1,0 +1,34 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+         HashMap<Integer,Integer> h=new HashMap<>();
+        ListNode cur=head;
+        while(cur!=null){
+            h.put(cur.val,h.getOrDefault(cur.val,0)+1);
+            cur=cur.next;
+        }
+        ArrayList<Integer> arr=new ArrayList<>();
+        for(int i:h.keySet()){
+            if(h.get(i)==1){
+                arr.add(i);
+            }
+        }
+        Collections.sort(arr);
+        cur=head;
+        ListNode prev=null;
+        if(arr.size()==0) return null;
+        for(int i=0;i<arr.size();i++){
+            cur.val=arr.get(i);
+            prev=cur;
+            cur=cur.next;
+        }
+        prev.next=null;
+        return head;
+    }
+}
+
+Input: head = [1,2,3,3,4,4,5]
+Output: [1,2,5]
+
+Input: head = [1,1,1,2,3]
+Output: [2,3]
+
