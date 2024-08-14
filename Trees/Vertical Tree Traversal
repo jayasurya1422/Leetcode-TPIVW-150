@@ -1,0 +1,68 @@
+
+Given a Binary Tree, find the vertical traversal of it starting from the leftmost level to the rightmost level.
+If there are multiple nodes passing through a vertical line, then they should be printed as they appear in level order traversal of the tree.
+
+Example 1:
+
+Input:
+           1
+         /   \
+       2       3
+     /   \   /   \
+   4      5 6      7
+              \      \
+               8      9           
+Output: 
+4 2 1 5 6 3 8 7 9 
+
+
+class Solution
+{
+    static class pair{
+        Node node;
+        int ind;
+        public pair(Node node,int ind){
+            this.node=node;
+            this.ind=ind;
+        }
+    }
+    //Function to find the vertical order traversal of Binary Tree.
+    static ArrayList <Integer> verticalOrder(Node root)
+    {
+        // add your code here
+        ArrayDeque<pair> q=new ArrayDeque<>();
+        TreeMap<Integer,ArrayList<Integer>> map=new TreeMap<>();
+        q.add(new pair(root,0));
+        while(!q.isEmpty()){
+            pair rem=q.remove();
+            int i1=rem.ind;
+            if(map.containsKey(i1)){
+                map.get(i1).add(rem.node.data);
+            }
+            else{
+                map.put(i1,new ArrayList<>());
+                map.get(i1).add(rem.node.data);
+            }
+            if(rem.node.left!=null){
+                q.add(new pair(rem.node.left,i1-1));
+            }
+            if(rem.node.right!=null){
+                q.add(new pair(rem.node.right,i1+1));
+            }
+        }
+        
+        ArrayList<Integer> ar=new ArrayList<>();
+        for(int it:map.keySet()){
+            for(Integer a:map.get(it)){
+                ar.add(a);
+            }
+        }
+        return ar;
+        
+    }
+}
+
+
+
+
+
