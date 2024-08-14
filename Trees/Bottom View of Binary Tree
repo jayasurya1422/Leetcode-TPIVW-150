@@ -1,0 +1,52 @@
+Given a binary tree, return an array where elements represent the bottom view of the binary tree from left to right.
+
+Note: If there are multiple bottom-most nodes for a horizontal distance from the root, then the latter one in the level traversal is considered. For example, in the below diagram, 3 and 4 are both the bottommost nodes at a horizontal distance of 0, here 4 will be considered.
+
+                      20
+                    /    \
+                  8       22
+                /   \     /   \
+              5      3 4     25
+                     /    \      
+                 10       14
+
+For the above tree, the output should be 5 10 4 14 25.
+
+
+class Solution
+{
+    static class pair{
+        Node node;
+        int ind;
+        pair(Node node,int ind){
+            this.node=node;
+            this.ind=ind;
+        }
+    }
+    //Function to return a list containing the bottom view of the given tree.
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        // Code here
+        Queue<pair> q=new LinkedList<pair>();
+        TreeMap<Integer,Integer> map=new TreeMap<>();
+        q.add(new pair(root,0));
+        while(!q.isEmpty()){
+            pair rem=q.remove();
+            int i1=rem.ind;
+                map.put(i1,rem.node.data);
+            if(rem.node.left!=null){
+                q.add(new pair(rem.node.left,i1-1));
+            }
+            if(rem.node.right!=null){
+                q.add(new pair(rem.node.right,i1+1));
+            }
+        }
+        ArrayList<Integer> arr=new ArrayList<>();
+        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
+            arr.add(entry.getValue());
+        }
+        return arr;
+    }
+    
+    
+}
